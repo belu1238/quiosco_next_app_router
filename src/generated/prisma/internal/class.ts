@@ -34,6 +34,10 @@ const config: runtime.GetPrismaClientConfig = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -56,8 +60,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Category {\n  id       Int       @id @default(autoincrement())\n  name     String\n  slug     String\n  products Product[] //arreglo por que una categoria tiene muchos productos\n}\n\nmodel Product {\n  id         Int             @id @default(autoincrement())\n  name       String\n  price      Float\n  image      String\n  categoryId Int\n  category   Category        @relation(fields: [categoryId], references: [id])\n  orderItems OrderProducts[]\n}\n\nmodel Order {\n  id            Int             @id @default(autoincrement())\n  name          String\n  total         Float\n  date          DateTime        @default(now()) // cada que se genere una orden se llena ese campo en automatico\n  status        Boolean         @default(false)\n  orderReadyAt  DateTime? // ? es opcional\n  orderProducts OrderProducts[]\n}\n\nmodel OrderProducts {\n  id        Int     @id @default(autoincrement())\n  orderId   Int\n  order     Order   @relation(fields: [orderId], references: [id])\n  productId Int\n  product   Product @relation(fields: [productId], references: [id])\n  quantity  Int\n}\n",
-  "inlineSchemaHash": "41e801aba2c0da9aa53125a843b53225177f4f9df114e84223d45f72e443adb9",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client\"\n  output        = \"../src/generated/prisma\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Category {\n  id       Int       @id @default(autoincrement())\n  name     String\n  slug     String\n  products Product[] //arreglo por que una categoria tiene muchos productos\n}\n\nmodel Product {\n  id         Int             @id @default(autoincrement())\n  name       String\n  price      Float\n  image      String\n  categoryId Int\n  category   Category        @relation(fields: [categoryId], references: [id])\n  orderItems OrderProducts[]\n}\n\nmodel Order {\n  id            Int             @id @default(autoincrement())\n  name          String\n  total         Float\n  date          DateTime        @default(now()) // cada que se genere una orden se llena ese campo en automatico\n  status        Boolean         @default(false)\n  orderReadyAt  DateTime? // ? es opcional\n  orderProducts OrderProducts[]\n}\n\nmodel OrderProducts {\n  id        Int     @id @default(autoincrement())\n  orderId   Int\n  order     Order   @relation(fields: [orderId], references: [id])\n  productId Int\n  product   Product @relation(fields: [productId], references: [id])\n  quantity  Int\n}\n",
+  "inlineSchemaHash": "a92b13e8a07141e655c5eedc7f8161fd443b96b4629b087d0004c3555585db19",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},
