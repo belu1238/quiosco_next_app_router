@@ -7,7 +7,10 @@ const nextConfig = {
                 hostname: 'res.cloudinary.com'
             }
         ]
-    }
+    },
+    experimental: {
+    serverComponentsExternalPackages: ["@prisma/client"]
+  }
 };
 
 export default nextConfig;

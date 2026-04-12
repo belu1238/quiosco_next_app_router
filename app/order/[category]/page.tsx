@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 import ProductCard from "@/app/components/products/ProductCard";
 import { prisma } from "@/src/lib/prisma";
 import Heading from "@/app/components/ui/Heading";
